@@ -3,6 +3,7 @@ package com.misun.reggie.filter;
 import com.alibaba.fastjson.JSON;
 import com.misun.reggie.common.R;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.*;
