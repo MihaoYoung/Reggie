@@ -14,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,5 +91,35 @@ public class DishController {
         dishService.updateWithFlavor(dishDto);
 
         return R.success("菜品修改成功");
+    }
+
+    /**
+     * 修改菜品状态
+     * @param ids
+     * @return
+     */
+    @PostMapping("/status/{type}")
+    public R<String> status(@PathVariable int type, Long[] ids){
+
+        for(Long id: ids){
+            Dish dish = dishService.getById(id);
+
+            if(dish != null){
+                dish.setStatus(type);
+                dishService.updateById(dish);
+            }
+        }
+
+        return R.success("菜品状态修改成功");
+    }
+
+    @DeleteMapping
+    public R<String> remove(Long[] ids){
+
+        for(Long id:ids){
+            dishService.removeWithFlavor(id);
+        }
+
+        return R.success("删除菜品成功");
     }
 }

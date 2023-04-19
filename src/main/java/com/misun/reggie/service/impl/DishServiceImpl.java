@@ -89,4 +89,15 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         dishFlavorService.saveBatch(dishFlavors);
 
     }
+
+    @Override
+    @Transactional
+    public void removeWithFlavor(Long id) {
+
+        LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(DishFlavor::getDishId, id);
+        dishFlavorService.remove(queryWrapper);
+
+        this.removeById(id);
+    }
 }
