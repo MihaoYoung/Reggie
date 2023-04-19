@@ -10,6 +10,7 @@ import com.misun.reggie.service.CategoryService;
 import com.misun.reggie.service.SetmealDishService;
 import com.misun.reggie.service.SetmealService;
 import com.sun.org.apache.xpath.internal.objects.XNodeSetForDOM;
+import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,37 @@ public class SetmealController {
         setmealDtoPage.setRecords(setmealList);
 
         return R.success(setmealDtoPage);
+    }
+
+    @DeleteMapping
+    public R<String> remove(@RequestParam List<Long> ids){
+
+
+        setmealService.removeSetmealWithDishById(ids);
+
+        return R.success("套餐删除成功");
+    }
+
+    @PostMapping("/status/{status}")
+    public R<String> status(@PathVariable int status, @RequestParam List<Long> ids){
+
+        List<Setmeal> setmeals = setmealService.listByIds(ids);
+        setmeals.stream().map((item)->{
+            item.setStatus(status);
+            return item;
+        }).collect(Collectors.toList());
+
+        setmealService.updateBatchById(setmeals);
+
+//        for(Long id:ids){
+//
+//            Setmeal setmeal = setmealService.getById(id);
+//            setmeal.setStatus(status);
+//            setmealService.updateById(setmeal);
+//
+//        }
+
+        return R.success("套餐状态更新成功");
     }
 
 
