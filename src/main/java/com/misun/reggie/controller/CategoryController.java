@@ -40,4 +40,14 @@ public class CategoryController {
 
         return R.success(pageInfo);
     }
+
+    @DeleteMapping
+    public R<String> delete(Long ids){
+
+        log.info("删除分类id：{}", ids);
+        // categoryService.removeById(ids);
+        categoryService.remove(ids);
+
+        return R.success("分类信息删除成功");
+    }
 }
