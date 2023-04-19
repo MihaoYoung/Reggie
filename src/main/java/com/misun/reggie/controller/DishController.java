@@ -129,6 +129,8 @@ public class DishController {
 
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Dish::getCategoryId, categoryId);
+        queryWrapper.eq(Dish::getStatus, 1);
+        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         List<Dish> dishes = dishService.list(queryWrapper);
 
         return R.success(dishes);

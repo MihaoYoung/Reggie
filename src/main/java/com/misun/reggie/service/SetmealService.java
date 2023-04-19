@@ -7,4 +7,5 @@ import com.misun.reggie.entity.Setmeal;
 public interface SetmealService extends IService<Setmeal> {
 
     public void saveSetmealWithDish(SetmealDto setmealDto);
+
 }
