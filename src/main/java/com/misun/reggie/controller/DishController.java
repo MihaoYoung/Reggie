@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.misun.reggie.common.R;
 import com.misun.reggie.dto.DishDto;
+import com.misun.reggie.dto.SetmealDto;
 import com.misun.reggie.entity.Category;
 import com.misun.reggie.entity.Dish;
 import com.misun.reggie.service.CategoryService;
@@ -122,4 +123,16 @@ public class DishController {
 
         return R.success("删除菜品成功");
     }
+
+    @GetMapping("/list")
+    public R<List<Dish>> list(Long categoryId){
+
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Dish::getCategoryId, categoryId);
+        List<Dish> dishes = dishService.list(queryWrapper);
+
+        return R.success(dishes);
+    }
+
+
 }
